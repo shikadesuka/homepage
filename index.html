@@ -104,25 +104,7 @@
     const titleInput = document.getElementById("title");
     const urlInput = document.getElementById("url");
     const siteGrid = document.getElementById("siteGrid");
-
-    // Load saved sites
     let sites = JSON.parse(localStorage.getItem("mySites")) || [];
-
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const newSite = {
-        title: titleInput.value.trim(),
-        url: urlInput.value.trim()
-      };
-      if (newSite.title && newSite.url) {
-        sites.push(newSite);
-        localStorage.setItem("mySites", JSON.stringify(sites));
-        renderSites();
-        form.reset();
-      }
-    });
-
     const searchInput = document.getElementById("search");
     const importFile = document.getElementById("importFile");
 
@@ -137,20 +119,6 @@
         renderSites(searchInput.value);
       }
     }
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const newSite = {
-        title: titleInput.value.trim(),
-        url: urlInput.value.trim()
-      };
-      if (newSite.title && newSite.url) {
-        sites.push(newSite);
-        saveSites();
-        renderSites(searchInput.value);
-        form.reset();
-      }
-    });
 
     searchInput.addEventListener("input", () => {
       renderSites(searchInput.value);
