@@ -173,6 +173,37 @@
   }
 });
 
+let dragStartIndex;
+
+function dragStart(e) {
+  dragStartIndex = +this.getAttribute("data-index");
+  this.style.opacity = "0.5";
+}
+
+function dragOver(e) {
+  e.preventDefault(); // Necessary to allow drop
+  this.style.border = "2px dashed #888";
+}
+
+function drop(e) {
+  const dragEndIndex = +this.getAttribute("data-index");
+  this.style.border = "none";
+  reorderSites(dragStartIndex, dragEndIndex);
+  renderSites(searchInput.value);
+  saveSites();
+}
+
+function dragEnd(e) {
+  this.style.opacity = "1";
+  this.style.border = "none";
+}
+
+function reorderSites(from, to) {
+  const movedItem = sites.splice(from, 1)[0];
+  sites.splice(to, 0, movedItem);
+}
+
+
 function renderSites(filter = "") {
   siteGrid.innerHTML = "";
   sites
@@ -181,6 +212,14 @@ function renderSites(filter = "") {
       const card = document.createElement("div");
       card.className = "card";
       card.style.backgroundColor = site.color || "#282c34";
+      card.setAttribute("draggable", "true");
+      card.setAttribute("data-index", index);
+
+      // 👇 Drag events
+      card.addEventListener("dragstart", dragStart);
+      card.addEventListener("dragover", dragOver);
+      card.addEventListener("drop", drop);
+      card.addEventListener("dragend", dragEnd);
 
       const favicon = `https://www.google.com/s2/favicons?sz=32&domain_url=${encodeURIComponent(site.url)}`;
       card.innerHTML = `
@@ -193,6 +232,7 @@ function renderSites(filter = "") {
       siteGrid.appendChild(card);
     });
 }
+
 
 
     // Initial render
