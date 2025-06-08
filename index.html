@@ -181,13 +181,19 @@ function renderSites(filter = "") {
       const card = document.createElement("div");
       card.className = "card";
       card.style.backgroundColor = site.color || "#282c34";
+
+      const favicon = `https://www.google.com/s2/favicons?sz=32&domain_url=${encodeURIComponent(site.url)}`;
       card.innerHTML = `
-        <a href="${site.url}" target="_blank">${site.title}</a>
+        <a href="${site.url}" target="_blank" style="display:flex;align-items:center;gap:0.5rem;">
+          <img src="${favicon}" alt="icon" style="width:20px;height:20px;" />
+          ${site.title}
+        </a>
         <button onclick="deleteSite(${index})" style="background:#ff5555;color:#fff;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;">X</button>
       `;
       siteGrid.appendChild(card);
     });
 }
+
 
     // Initial render
     renderSites();
