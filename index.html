@@ -60,6 +60,9 @@
       padding: 1rem;
       border-radius: 8px;
       box-shadow: 0 0 5px rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .card a {
@@ -212,7 +215,7 @@ function renderSites(filter = "") {
       card.style.backgroundColor = site.color || "#282c34";
       card.innerHTML = `
         <a href="${site.url}" target="_blank">${site.title}</a>
-        <button onclick="deleteSite(${index})" style="margin-top:0.5rem;background:#ff5555;color:#fff;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;">Delete</button>
+        <button onclick="deleteSite(${index})" style="background:#ff5555;color:#fff;border:none;padding:0.3rem 0.5rem;border-radius:4px;cursor:pointer;">X</button>
       `;
       siteGrid.appendChild(card);
     });
